@@ -1,6 +1,7 @@
-import { ActionFunctionArgs } from "@remix-run/node";
+import { ActionFunctionArgs, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { validate } from "./validate";
+import { authCookie, createAccount } from "~/auth";
 
 export function meta() {
   return [
@@ -13,7 +14,15 @@ export async function action({ request }: ActionFunctionArgs) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const errors = validate(email, password);
-  return { errors };
+  if (errors) {
+    return { errors };
+  }
+  const user = await createAccount(email, password);
+  return redirect("/", {
+    headers: {
+      "Set-Cookie": await authCookie.serialize(user.id),
+    }
+  });
 }
 
 export default function Signup() {
