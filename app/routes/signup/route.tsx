@@ -1,5 +1,6 @@
 import { ActionFunctionArgs } from "@remix-run/node";
-import { Form } from "@remix-run/react";
+import { Form, useActionData } from "@remix-run/react";
+import { validate } from "./validate";
 
 export function meta() {
   return [
@@ -9,11 +10,17 @@ export function meta() {
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
-  console.log(Object.fromEntries(formData));
-  return null;
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+  const errors = validate(email, password);
+  return { errors };
 }
 
 export default function Signup() {
+  const actionData = useActionData<typeof action>();
+  const emailError = actionData?.errors?.email
+  const passwordError = actionData?.errors?.password;
+
   return (
     <div>
       <h1>Sign up</h1>
@@ -30,6 +37,9 @@ export default function Signup() {
             placeholder="Email address"
             style={{ width: "100%" }}
           />
+          {emailError && (
+            <p style={{ padding: 0, margin: 0, color: "red" }}>{emailError}</p>
+          )}
         </div>
         <div>
           <label htmlFor="password">Password</label>
@@ -43,6 +53,9 @@ export default function Signup() {
             aria-describedby="password-error"
             style={{ width: "100%" }}
           />
+          {passwordError && (
+            <p style={{ padding: 0, margin: 0, color: "red" }}>{passwordError}</p>
+          )}
         </div>
         <button type="submit">Signup</button>
       </Form>
