@@ -17,7 +17,8 @@ export default function Home() {
               .map((post) => (
                 <Link
                   key={post.id}
-                  href={`/post/${post.id}`}
+                  // href={`/post/${post.id}`}
+                  href="/"
                   className="block p-6 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
                 >
                   <h4 className="text-lg font-pixel mb-2">{post.title}</h4>
@@ -27,7 +28,11 @@ export default function Home() {
                 </Link>
               ))}
           </div>
-          <Link href={`/category/${category.toLowerCase()}`} className="inline-block mt-4 font-pixel text-sm underline">
+          <Link 
+            // href={`/category/${category.toLowerCase()}`} 
+            href="/"
+            className="inline-block mt-4 font-pixel text-sm underline"
+          >
             See all {category} posts
           </Link>
         </div>

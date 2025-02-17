@@ -5,21 +5,21 @@ export default function NavMenu() {
   return (
     <nav className="flex justify-center space-x-4 my-4">
       <Link
-        href="/category/tech"
+        href="/learn"
         className="flex flex-col items-center p-2 bg-gray-800 rounded pixelated-border hover:bg-gray-700 transition-colors"
       >
         <CubeIcon className="w-6 h-6 mb-1" />
         <span className="font-pixel text-xs">Learn</span>
       </Link>
       <Link
-        href="/category/art"
+        href="/projects"
         className="flex flex-col items-center p-2 bg-gray-800 rounded pixelated-border hover:bg-gray-700 transition-colors"
       >
         <BeakerIcon className="w-6 h-6 mb-1" />
         <span className="font-pixel text-xs">Projects & Experiments</span>
       </Link>
       <Link
-        href="/category/finance"
+        href="/shop"
         className="flex flex-col items-center p-2 bg-gray-800 rounded pixelated-border hover:bg-gray-700 transition-colors"
       >
         <ShoppingCartIcon className="w-6 h-6 mb-1" />
