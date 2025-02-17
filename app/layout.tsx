@@ -22,8 +22,8 @@ const vt323 = VT323({
 })
 
 export const metadata = {
-  title: "Pixel Wisdom",
-  description: "Tech, Art, and Finance tips with a retro twist",
+  title: "EscolAberta",
+  description: "Ciência da computação, engenharia eletrônica, engenharia elétrica, Matemática, Física e Inglês!",
 }
 
 export default function RootLayout({

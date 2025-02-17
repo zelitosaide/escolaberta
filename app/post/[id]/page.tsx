@@ -13,8 +13,13 @@ const posts = [
   // Add more posts here...
 ];
 
-export default function Post({ params }: { params: { id: string } }) {
-  const post = posts.find((p) => p.id === Number.parseInt(params.id));
+export default async function Post({ 
+  params 
+}: { 
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params;
+  const post = posts.find((p) => p.id === Number.parseInt(id));
 
   if (!post) {
     notFound();

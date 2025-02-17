@@ -2,9 +2,14 @@ import { posts } from "@/data/posts";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
-  const category = params.slug.charAt(0).toUpperCase() + params.slug.slice(1);
-  const categoryPosts = posts.filter((post) => post.category.toLowerCase() === params.slug);
+export default async function CategoryPage({ 
+  params 
+}: { 
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params;
+  const category = slug.charAt(0).toUpperCase() + slug.slice(1);
+  const categoryPosts = posts.filter((post) => post.category.toLowerCase() === slug);
 
   if (categoryPosts.length === 0) {
     notFound();
