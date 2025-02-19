@@ -61,7 +61,6 @@ export default function FloatingPixels() {
   //     ))}
   //   </div>
   // );
-
   const [pixels, setPixels] = useState<Pixel[]>([]);
   const [dimensions, setDimensions] = useState({
     width: typeof window !== "undefined" ? window.innerWidth : 1920,

@@ -44,7 +44,7 @@ export default function Sidebar() {
 
       <div
         className={clsx("overflow-y-auto lg:static lg:block", {
-          "fixed inset-x-0 bottom-0 top-14 mt-px bg-black": isOpen,
+          "fixed inset-x-0 bottom-0 top-14 mt-px bg-slate-950": isOpen,
           hidden: !isOpen,
         })}
       >
