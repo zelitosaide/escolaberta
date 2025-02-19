@@ -73,7 +73,8 @@ export default function Pricing({ product }: { product: Product }) {
   const price = dinero(product.price as DineroSnapshot<number>);
 
   return (
-    <div className="space-y-4 rounded-lg bg-gray-900 p-3">
+    // <div className="space-y-4 rounded-lg bg-gray-900 p-3">
+    <div className="space-y-4 rounded-lg bg-slate-800 p-3">
       <ProductPrice price={price} discount={product.discount} />
 
       <Ping />

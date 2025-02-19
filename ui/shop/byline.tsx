@@ -3,7 +3,7 @@ export default function Byline({ className }: { className: string }) {
     <div
       className={`${className} inset-x-0 bottom-3 mx-3 rounded-lg bg-vc-border-gradient p-px shadow-lg shadow-black/20`}
     >
-      <div className="flex flex-row justify-between rounded-lg bg-slate-950 p-3.5 lg:px-5 lg:py-3">
+      <div className="flex flex-row justify-between rounded-lg bg-slate-900 p-3.5 lg:px-5 lg:py-3">
         <div className="flex items-center gap-x-1.5">
           <div className="text-sm text-gray-400">By</div>
           <a href="https://vercel.com" title="Vercel">
