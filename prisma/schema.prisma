@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  email     String  @unique 
+  role      Role    @default(USER)
+  password  Password?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Password {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  salt      String
+  hash      String
+  accountId String  @db.ObjectId @unique
+  account   Account @relation(fields: [accountId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Comp {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String   // Nome do componente
+  type         String   // Tipo do componente (e.g., resistor, capacitor, transistor)
+  description  String   // Descrição do componente
+  datasheet    String?  // URL ou caminho para o datasheet do componente
+  images       String[] // URLs das imagens do componente
+  price        Float    // Preço do componente
+  stock        Int      // Quantidade em estoque
+  createdAt    DateTime @default(now()) // Data de criação do registro
+  updatedAt    DateTime @updatedAt      // Atualizado automaticamente na modificação
+  categories   String[] // Categorias relacionadas (e.g., "Resistores", "Sensores")
+  isActive     Boolean  @default(true) // Disponibilidade para venda
+}

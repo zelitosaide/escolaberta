@@ -1,4 +1,4 @@
-import "../home.css";
+import "./home.css";
 
 import { Press_Start_2P, VT323 } from "next/font/google";
 import EscolAbertaLogo from "@/ui/escolaberta-logo";

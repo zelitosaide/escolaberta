@@ -16,7 +16,7 @@ export default function NavMenu() {
         className="flex flex-col items-center p-2 bg-gray-800 rounded pixelated-border hover:bg-gray-700 transition-colors"
       >
         <BeakerIcon className="w-6 h-6 mb-1" />
-        <span className="font-pixel text-xs">Projects & Experiments</span>
+        <span className="font-pixel text-xs">Projects & Labs</span>
       </Link>
       <Link
         href="/shop"
