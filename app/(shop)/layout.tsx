@@ -24,7 +24,7 @@ export default function ShopLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`overflow-y-scroll pb-36 bg-gray-900 dark:bg-gray-900`}>
+      <body className={`overflow-y-scroll pb-36 bg-gray-900 dark:bg-gray-900 bg-[url('/grid.svg')]`}>
         <Sidebar />
         <PixelatedBackground />
         <div className="lg:pl-72">
