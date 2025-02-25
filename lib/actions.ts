@@ -94,64 +94,49 @@ export async function createComp(prevState: State, formData: FormData) {
 
 const UpdateComp = FormSchema.omit({ id: true, createdAt: true, updatedAt: true });
 
-// export async function updateComp(id: string, formData: FormData) {
-//   const validatedFields = UpdateComp.safeParse({
-//     name: formData.get("name"),
-//     type: formData.get("type"),
-//     description: formData.get("description"),
-//     datasheet: formData.get("datasheet"),
-//     images: JSON.parse(formData.get("images") as string),
-//     price: formData.get("price"),
-//     stock: formData.get("stock"),
-//     categories: JSON.parse(formData.get("categories") as string),
-//     isActive: formData.get("status") === "Out of Stock" ? false : true,
-//   });
+export async function updateComp(
+  id: string,
+  prevState: State,
+  formData: FormData,
+) {
+  let status = null;
+  
+  if (formData.get("status") === "Out of Stock" ) {
+    status = false;
+  } else if (formData.get("status") === "In Stock") {
+    status = true;
+  }
 
-//   // If form validation fails, return errors early. Otherwise, continue.
-//   if (!validatedFields.success) {
-//     return {
-//       errors: validatedFields.error.flatten().fieldErrors,
-//       message: "Missing Fields. Failed to Update Component."
-//     };
-//   }
-
-//   try {
-//     await prisma.comp.update({ 
-//       where: { id }, 
-//       data: validatedFields.data,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     // If a database error occurs, return a more specific error.
-//     return {
-//       message: "Database Error: Failed to Update Component.",
-//     }
-//   }
-
-//   // Revalidate the cache for the comps page and redirect the user.
-//   revalidatePath("/dashboard/comps");
-//   redirect("/dashboard/comps");
-// }
-export async function updateComp(id: string, formData: FormData) {
-  const validatedFields = UpdateComp.parse({
+  const validatedFields = UpdateComp.safeParse({
     name: formData.get("name"),
     type: formData.get("type"),
     description: formData.get("description"),
-    datasheet: formData.get("datasheet"),
+    datasheet: formData.get("datasheet") === "" ? undefined : formData.get("datasheet"),
     images: JSON.parse(formData.get("images") as string),
     price: formData.get("price"),
     stock: formData.get("stock"),
     categories: JSON.parse(formData.get("categories") as string),
-    isActive: formData.get("status") === "Out of Stock" ? false : true,
+    isActive: status,
   });
+
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Update Component."
+    };
+  }
 
   try {
     await prisma.comp.update({ 
       where: { id }, 
-      data: validatedFields,
+      data: validatedFields.data,
     });
   } catch (error) {
     console.log(error);
+    return {
+      message: "Database Error: Failed to Update Component.",
+    }
   }
 
   // Revalidate the cache for the comps page and redirect the user.

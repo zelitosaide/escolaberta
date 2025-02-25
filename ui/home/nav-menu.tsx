@@ -1,4 +1,4 @@
-import { BeakerIcon, CubeIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { ArrowRightEndOnRectangleIcon, BeakerIcon, CubeIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 export default function NavMenu() {
@@ -24,6 +24,13 @@ export default function NavMenu() {
       >
         <ShoppingCartIcon className="w-6 h-6 mb-1" />
         <span className="font-pixel text-xs">Shop</span>
+      </Link>
+      <Link
+        href="/admin"
+        className="flex flex-col items-center p-2 bg-gray-800 rounded pixelated-border hover:bg-gray-700 transition-colors"
+      >
+        <ArrowRightEndOnRectangleIcon className="w-6 h-6 mb-1" />
+        <span className="font-pixel text-xs">Login</span>
       </Link>
     </nav>
   );

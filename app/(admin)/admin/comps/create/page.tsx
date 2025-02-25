@@ -19,7 +19,7 @@ export default function Page() {
       {/* Breadcrumbs */}
       <Breadcrumbs breadcrumbs={breadcrumbs} />
 
-      {/* CompForm */}
+      {/* Create Comp Form */}
       <CreateCompForm />
     </main>
   );

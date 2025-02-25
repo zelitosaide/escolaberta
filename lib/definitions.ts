@@ -42,3 +42,18 @@ interface UsedPrice {
   currency: Currency;
   scale: number;
 };
+
+export interface Comp {
+  id: string;
+  name: string;
+  type: string;
+  description: string;
+  images: string[];
+  isActive: boolean;
+  price: number;
+  stock: number;
+  categories: string[];
+  datasheet: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
