@@ -7,27 +7,47 @@ import { redirect } from "next/navigation";
 
 const FormSchema = z.object({
   id: z.string(),
-  name: z.string({
-    invalid_type_error: "Please enter the component name",
-  }).min(1, { message: "Component name cannot be empty." }),
-  type: z.string({
-    invalid_type_error: "Please select the component Type",
-  }).min(1, { message: "Component type cannot be empty." }),
-  description: z.string({
-    invalid_type_error: "Please enter the component description",
-  }).min(5, { message: "Description must be at least 5 characters long." }),
-  datasheet: z.string().url({ message: "Invalid URL format. Please provide a valid datasheet URL." }).optional(), // Campo opcional
-  images: z.array(z.string().url({ message: "Invalid image URL format." })).min(1, { message: "At least one image URL is required." }),
-  price: z.coerce.number().gt(0, { message: "Price must be greater than 0." }), // Ensures price > 0
-  stock: z.coerce.number({
-    invalid_type_error: "Stock must be a valid number.",
-  }).int({ message: "Stock must be an integer." }),
-  categories: z.array(z.string().min(1, { message: "Category cannot be empty." })).min(1, { message: "At least one category is required." }),
+  name: z
+    .string({
+      invalid_type_error: "Please enter the component name",
+    })
+    .min(1, { message: "Component name cannot be empty." }),
+  type: z
+    .string({
+      invalid_type_error: "Please select the component Type",
+    })
+    .min(1, { message: "Component type cannot be empty." }),
+  description: z
+    .string({
+      invalid_type_error: "Please enter the component description",
+    })
+    .min(5, { message: "Description must be at least 5 characters long." }),
+  datasheet: z
+    .string()
+    .url({ message: "Invalid URL format. Please provide a valid datasheet URL." })
+    .optional(),
+  images: z
+    .array(z.string().url({ message: "Invalid image URL format." }))
+    .min(1, { message: "At least one image URL is required." }),
+  price: z.coerce.number().gt(0, { message: "Price must be greater than 0." }),
+  stock: z
+    .coerce
+    .number({
+      invalid_type_error: "Stock must be a valid number.",
+    })
+    .int({ message: "Stock must be an integer." }),
+  categories: z
+    .array(z.string().min(1, { message: "Category cannot be empty." }))
+    .min(1, { message: "At least one category is required." }),
   isActive: z.boolean({
     invalid_type_error: "Please specify if the component is active.",
   }),
-  createdAt: z.string().datetime({ message: "Invalid createdAt format. Please provide a valid datetime." }),
-  updatedAt: z.string().datetime({ message: "Invalid updatedAt format. Please provide a valid datetime." }),
+  createdAt: z
+    .string()
+    .datetime({ message: "Invalid createdAt format. Please provide a valid datetime." }),
+  updatedAt: z
+    .string()
+    .datetime({ message: "Invalid updatedAt format. Please provide a valid datetime." }),
 });
 
 const CreateComp = FormSchema.omit({ id: true, createdAt: true, updatedAt: true });
@@ -109,9 +129,11 @@ export async function updateComp(
 
   const validatedFields = UpdateComp.safeParse({
     name: formData.get("name"),
-    type: formData.get("type"),
+    type: formData.get("type"), 
     description: formData.get("description"),
-    datasheet: formData.get("datasheet") === "" ? undefined : formData.get("datasheet"),
+    datasheet: formData.get("datasheet") === "" 
+      ? undefined 
+      : formData.get("datasheet"),
     images: JSON.parse(formData.get("images") as string),
     price: formData.get("price"),
     stock: formData.get("stock"),
@@ -145,7 +167,11 @@ export async function updateComp(
 }
 
 export async function deleteComp(id: string) {
-  // throw new Error("Failed to Delete Component");
-  await prisma.comp.delete({ where: { id } });
-  revalidatePath("/admin/comps");
+  try {
+    await prisma.comp.delete({ where: { id } });
+    revalidatePath("/admin/comps");
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to delete component");
+  }
 }

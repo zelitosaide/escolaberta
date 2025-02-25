@@ -51,3 +51,62 @@ model Comp {
   categories   String[] // Categorias relacionadas (e.g., "Resistores", "Sensores")
   isActive     Boolean  @default(true) // Disponibilidade para venda
 }
+
+model Product {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  stock        Int
+  rating       Float
+  name         String
+  description  String
+  price        Price?
+  isBestSeller Boolean
+  leadTime     Int
+  image        String?     
+  imageBlur    String?     
+  discount     Discount?   
+  usedPrice    UsedPrice?  
+  type         String
+  images       String[]
+  isActive     Boolean
+  categories   String[]
+  datasheet    String?     
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Price {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  amount    Float
+  currency  Currency?
+  scale     Int
+  product   Product   @relation(fields: [productId], references: [id])
+  productId String    @unique @db.ObjectId
+}
+
+model Currency {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  code         String
+  base         Int
+  exponent     Int
+  price        Price       @relation(fields: [priceId], references: [id])
+  priceId      String      @unique @db.ObjectId
+  usedPrice    UsedPrice   @relation(fields: [usedPriceId], references: [id])
+  usedPriceId  String      @unique @db.ObjectId
+}
+
+model Discount {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  percent   Float
+  expires   Int?
+  product   Product   @relation(fields: [productId], references: [id])
+  productId String    @unique @db.ObjectId
+}
+
+model UsedPrice {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  amount    Float
+  currency  Currency?
+  scale     Int
+  product   Product   @relation(fields: [productId], references: [id])
+  productId String    @unique @db.ObjectId
+}

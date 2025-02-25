@@ -5,44 +5,6 @@ export interface Review {
   text: string;
 };
 
-export interface Product {
-  id: string;
-  stock: number;
-  rating: number;
-  name: string;
-  description: string;
-  price: Price;
-  isBestSeller: boolean;
-  leadTime: number;
-  image?: string;
-  imageBlur?: string;
-  discount?: Discount;
-  usedPrice?: UsedPrice;
-};
-
-interface Price {
-  amount: number;
-  currency: Currency;
-  scale: number;
-};
-
-interface Currency {
-  code: string;
-  base: number;
-  exponent: number;
-};
-
-interface Discount {
-  percent: number;
-  expires?: number;
-};
-
-interface UsedPrice {
-  amount: number;
-  currency: Currency;
-  scale: number;
-};
-
 export interface Comp {
   id: string;
   name: string;
@@ -56,4 +18,63 @@ export interface Comp {
   datasheet: string | null;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface Product {
+  id: string;
+  stock: number;
+  rating: number;
+  name: string;
+  description: string;
+  price?: Price;
+  isBestSeller: boolean;
+  leadTime: number;
+  image?: string;
+  imageBlur?: string;
+  discount?: Discount;
+  usedPrice?: UsedPrice;
+  type: string;
+  images: string[];
+  isActive: boolean;
+  categories: string[];
+  datasheet?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Price {
+  id: string;
+  amount: number;
+  currency?: Currency;
+  scale: number;
+  product: Product;
+  productId: string;
+}
+
+export interface Currency {
+  id: string;
+  code: string;
+  base: number;
+  exponent: number;
+  price: Price;
+  priceId: string;
+  usedPrice: UsedPrice;
+  usedPriceId: string;
+}
+
+export interface Discount {
+  id: string;
+  percent: number;
+  expires?: number;
+  product: Product;
+  productId: string;
+}
+
+export interface UsedPrice {
+  id: string;
+  amount: number;
+  currency?: Currency;
+  scale: number;
+  product: Product;
+  productId: string;
 }
