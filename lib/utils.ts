@@ -1,5 +1,9 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { type ClassValue, clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
 
 export function formatCurrencyUS(amount: number) {
   return (amount / 100).toLocaleString("en-US", {
@@ -53,9 +57,9 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
   ];
 };
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+// export function cn(...inputs: ClassValue[]) {
+//   return twMerge(clsx(inputs));
+// }
 
 export async function withDelay<T>(
   promise: Promise<T>,

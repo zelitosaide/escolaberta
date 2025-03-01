@@ -87,3 +87,13 @@ export default function Select({ label, name, defaultValue, items, ariaDescribed
     </div>
   );
 }
+
+
+const SelectAsync = () => {
+  const [selected, setSelected] = useState<Item | null>(null);
+  const [items, setItems] = useState<Item[]>([]);
+
+  // useEffect(() => {
+  //   fetchItems();
+  // }, []);
+}
